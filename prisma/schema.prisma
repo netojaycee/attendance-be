@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String       @id @default(uuid())
+  fullName   String
+  instrument String
+  voice      String
+  attendance Attendance[]
+}
+
+model PracticeSession {
+  id         String       @id @default(uuid())
+  date       DateTime
+  startTime  DateTime
+  endTime    DateTime
+  type       Type         @default(SINGLE)
+  attendance Attendance[]
+}
+
+model Attendance {
+  id                String          @id @default(uuid())
+  userId            String
+  practiceSessionId String
+  arrivalTime       DateTime
+  user              User            @relation(fields: [userId], references: [id])
+  practiceSession   PracticeSession @relation(fields: [practiceSessionId], references: [id])
+}
+
+enum Type {
+  SINGLE
+  DOUBLE
+}
