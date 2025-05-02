@@ -23,7 +23,7 @@ import {
 
 const BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? process.env.NEXT_PUBLIC_BASE_URL || 'https://your-vercel-app.vercel.app'
+        ? process.env.NEXT_PUBLIC_BASE_URL || 'https://attendance-be-lime.vercel.app'
     : 'http://localhost:9900';
 
 // Base query with TypeScript annotations
